@@ -21,17 +21,32 @@ class BankAppPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(DsSpacing.large),
+              padding: const EdgeInsets.all(DsSpacing.medium),
               decoration: BoxDecoration(
                 color: DsColor.surface,
                 boxShadow: [DsShadows.medium],
               ),
               child: Stack(
                 children: [
+                  const Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Align(
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/flutter_bank_logo.png',
+                        ),
+                        fit: BoxFit.fill,
+                        height: DsSizing.largest,
+                        width: DsSizing.largest,
+                      ),
+                    ),
+                  ),
                   Center(
                     child: Text(
                       'Welcome,\n John Doe!',
-                      style: DsTextStyle.heading1.copyWith(
+                      style: DsTextStyle.heading2.copyWith(
                         color: DsColor.onBackground,
                       ),
                     ),
@@ -46,39 +61,44 @@ class BankAppPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: DsSpacing.extraLarge),
-            Container(
-              padding: const EdgeInsets.all(DsSpacing.large),
-              margin: const EdgeInsets.symmetric(horizontal: DsSpacing.medium),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(DsBorderRadius.large),
-                color: DsColor.surface,
-                boxShadow: [DsShadows.small],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Account Balance',
-                    style: DsTextStyle.heading3,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: const [
+                  SizedBox(width: DsSpacing.medium),
+                  _AmountCard(
+                    title: 'Account Balance',
+                    amount: 'R\$ 5.000,00',
                   ),
-                  const SizedBox(height: DsSpacing.small),
-                  Text(
-                    'R\$ 5.000,00',
-                    style: DsTextStyle.heading3.copyWith(
-                      color: DsColor.successDark,
-                    ),
+                  SizedBox(width: DsSpacing.medium),
+                  _AmountCard(
+                    title: 'Last Incomes',
+                    amount: 'R\$ 357,43',
                   ),
+                  SizedBox(width: DsSpacing.medium),
                 ],
               ),
             ),
             const SizedBox(height: DsSpacing.extraLarge),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: DsSpacing.medium),
-              child: Text(
-                'Recent Transactions',
-                style: DsTextStyle.heading2.copyWith(
-                  color: DsColor.onBackground,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Recent Transactions',
+                    style: DsTextStyle.heading2.copyWith(
+                      color: DsColor.onBackground,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: DsSpacing.medium),
+                    child: Icon(
+                      Icons.calendar_month,
+                      color: DsColor.onBackground,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: DsSpacing.large),
@@ -94,21 +114,21 @@ class BankAppPage extends StatelessWidget {
                   _TransactionCard(
                     icon: Icons.shopping_cart,
                     title: 'Online Purchase',
-                    amount: '-\$50.00',
+                    amount: '- R\$ 50,00',
                     date: 'May 28, 2023',
                   ),
                   SizedBox(height: DsSpacing.medium),
                   _TransactionCard(
                     icon: Icons.restaurant,
                     title: 'Restaurant Bill',
-                    amount: '-\$80.00',
+                    amount: '- R\$ 80,00',
                     date: 'May 27, 2023',
                   ),
                   SizedBox(height: DsSpacing.medium),
                   _TransactionCard(
                     icon: Icons.local_gas_station,
                     title: 'Gas Refill',
-                    amount: '-\$30.00',
+                    amount: '- R\$ 30,00',
                     date: 'May 26, 2023',
                   ),
                   SizedBox(height: DsSpacing.extraLarge * 3),
@@ -132,6 +152,48 @@ class BankAppPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _AmountCard extends StatelessWidget {
+  final String title;
+  final String amount;
+  const _AmountCard({
+    required this.title,
+    required this.amount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(DsSpacing.large),
+      margin: const EdgeInsets.symmetric(
+        vertical: DsSpacing.extraSmall,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(DsBorderRadius.large),
+        color: DsColor.surface,
+        boxShadow: [DsShadows.small],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: DsTextStyle.heading3.copyWith(
+              color: DsColor.onBackground,
+            ),
+          ),
+          const SizedBox(height: DsSpacing.small),
+          Text(
+            amount,
+            style: DsTextStyle.heading3.copyWith(
+              color: DsColor.successDark,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -219,8 +281,8 @@ class _ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: DsSizing.largest,
-      height: DsSizing.largest,
+      width: DsSizing.larger,
+      height: DsSizing.larger,
       decoration: BoxDecoration(
         color: DsColor.tertiary,
         boxShadow: [DsShadows.medium],
